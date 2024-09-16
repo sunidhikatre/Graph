@@ -1,0 +1,51 @@
+Overall Time Complexity:
+The time complexity for building the adjacency list is O(V²).
+The time complexity for DFS is O(V + E), which in the worst case is O(V²).
+Thus, the overall time complexity is O(V²).
+
+Space Complexity:
+The adjacency list requires O(V + E) space, which is O(V²) in the worst case, as E can be as large as V² for a dense graph.
+The visited array takes O(V) space.
+Therefore, the overall space complexity is O(V²).
+
+
+
+class Solution {
+    int ans = 0;
+    public int findCircleNum(int[][] isConnected) {
+
+       int vertex = isConnected.length;  
+        ArrayList<ArrayList<Integer>> adjLs = new       ArrayList<ArrayList<Integer>>();
+
+         for(int i=0;i<vertex;i++){
+            adjLs.add(new ArrayList<>()); 
+        }
+
+        for(int i=0; i<vertex; i++){
+            for(int j=0; j<vertex; j++){
+                if(isConnected[i][j] == 1 && i!=j){
+                    adjLs.get(i).add(j);
+                }
+            }
+        }
+
+        int[] visited = new int[vertex];
+
+        for(int i=0; i<isConnected.length; i++) {
+            if(visited[i] == 0) {
+                ans++;
+                dfs(adjLs, visited, i);
+            }
+        }
+        return ans;
+    }
+
+    public void dfs(ArrayList<ArrayList<Integer>> adjList, int[] visited, int node) {
+        visited[node] = 1;
+        for(int adjNode: adjList.get(node)) {
+            if(visited[i] == 0) {
+                dfs(adjList, visited, adjNode);
+            }
+        }
+    }
+}

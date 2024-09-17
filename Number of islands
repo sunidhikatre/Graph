@@ -1,0 +1,39 @@
+Iterate through the grid, and for every unvisited land cell ('1'), start a Depth-First Search (DFS).
+Use DFS to mark all connected land cells as visited by changing them to '2'.
+Increment the island count for each DFS initiation, which represents a new island.
+
+class Solution {
+    public int numIslands(char[][] grid) {
+        int noOfIslands = 0;
+        int n = grid.length;
+        int m = grid[0].length;
+
+        for(int row = 0; row < n; row++) {
+            for(int col = 0; col< m; col++) {
+                if(grid[row][col] == '1') {
+                    grid[row][col] = '2';
+                    noOfIslands++;
+                    dfs(grid, row , col);
+                }
+            }
+        }
+        return noOfIslands;
+    }
+
+    public void dfs(char [][] grid, int row, int col) {
+        grid[row][col] = '2';
+        int n = grid.length;
+        int m = grid[0].length;
+        int directions[][] = {{-1,0},{1,0},{0,-1},{0,1}};
+
+        for(int[] dir : directions) {
+            int newRow = row + dir[0];
+            int newCol = col + dir[1];
+
+            if(newRow >= 0 && newRow < n && newCol >=0 && newCol <m 
+                && grid[newRow][newCol] == '1'){
+                    dfs(grid, newRow, newCol);
+                }
+        }
+    }
+} 

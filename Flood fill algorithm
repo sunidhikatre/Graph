@@ -1,0 +1,30 @@
+Start a DFS from the given starting pixel, storing its initial color (startColor).
+In DFS, for each neighboring pixel, check if it has the same startColor and hasn't already been filled with the new color.
+Recursively fill all connected pixels with the new color, ensuring valid bounds and avoiding already-colored pixels.
+
+class Solution {
+
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        int startColor = image[sr][sc];
+        dfs(image, sr, sc, color, startColor);
+        return image;
+    }
+
+    public void dfs(int [][]image, int sr, int sc, int color, int startColor) {
+        image[sr][sc] = color;
+        int n = image.length;
+        int m = image[0].length;
+
+        int [][]directions = {{0,-1}, {0,1}, {-1,0}, {1,0}};
+
+        for(int[] dir: directions) {
+            int newRow = sr + dir[0];
+            int newCol = sc + dir[1];
+
+            if(newRow >= 0 && newRow <n && newCol>=0 && newCol < m
+                && image[newRow][newCol] != color && image[newRow][newCol]==startColor) {
+                    dfs(image, newRow, newCol, color, startColor);
+                }
+        }
+    }
+}

@@ -1,0 +1,57 @@
+
+Initialize Queue and Visited Array: Add all cells with 0 to the queue, marking them as visited and initialize their distances as 0.
+BFS Traversal: Use BFS to traverse each cell, checking its four neighbors. If an unvisited 1 is found, update its distance, mark it visited, and add it to the queue.
+Update Matrix: Continue BFS until all cells have been processed, returning the updated matrix with minimum distances to the nearest 0.
+
+
+class Pair {
+    int row;
+    int col;
+    int dist;
+    public Pair(int row, int col, int dist) {
+        this.row = row;
+        this.col = col;
+        this.dist = dist;
+    }
+}
+
+class Solution {
+    public int[][] updateMatrix(int[][] mat) {
+        Queue<Pair> q = new LinkedList<Pair>();
+
+        int m = mat.length;
+        int n = mat[0].length;
+        int[][] updatedMatrix = new int[m][n];
+         int[][] visited = new int[m][n];
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++) {
+                if(mat[i][j] == 0){
+                    q.add(new Pair(i, j, 0));
+                    updatedMatrix[i][j] = 0;
+                    visited[i][j] = 1;
+                }
+            }
+        }
+
+        while(!q.isEmpty()) {
+            Pair node = q.poll();
+
+            int[][] directions = {{0,-1}, {0,1}, {-1,0}, {1,0}};
+
+            for(int[]dir : directions) {
+                int newRow = node.row + dir[0];
+                int newCol = node.col + dir[1];
+
+                if(newRow >= 0 && newRow <m && newCol >= 0 && newCol < n && visited[newRow][newCol] == 0) {
+                        q.add(new Pair(newRow, newCol, node.dist + 1));
+                        updatedMatrix[newRow][newCol] = node.dist + 1;
+                        visited[newRow][newCol] = 1;
+                    }
+            }
+
+        }
+        return updatedMatrix;
+    }
+
+    
+}

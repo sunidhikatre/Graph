@@ -1,0 +1,61 @@
+Initialization: Initialize variables for grid dimensions m and n, a counter count for enclaves, and a visited matrix to track visited cells.
+
+DFS from Borders: Perform DFS from all '1' cells on the borders (first and last rows, first and last columns), marking connected '1' cells as visited.
+
+Count Enclaves: Traverse the entire grid again and count all '1' cells that are not marked as visited in the visited matrix, indicating they are not connected to the borders.
+
+
+class Solution {
+    public int numEnclaves(int[][] board) {
+        int m = board.length;
+        int n = board[0].length;
+        int count =0;
+        int[][] visited = new int[m][n];
+
+        for(int i = 0; i < m; i++) {
+            //first column
+            if(board[i][0] == 1 && visited[i][0] == 0) {
+                dfs(i, 0, visited, board, m, n);
+            }
+            //last column
+            if(board[i][n-1] == 1 && visited[i][n-1] == 0) {
+                dfs(i, n-1, visited, board, m, n);
+            }
+        }
+
+        for(int j=0; j < n; j++) {
+            //first row
+            if(board[0][j] == 1 && visited[0][j] == 0) {
+                dfs(0, j, visited, board, m, n);
+            }
+            //last row
+            if(board[m-1][j] == 1 && visited[m-1][j] == 0) {
+                dfs(m-1, j, visited, board, m, n);
+            }
+        }
+
+        for(int i=0; i<m; i++) {
+            for(int j=0; j<n; j++) {
+                if(board[i][j] ==1 && visited[i][j] == 0){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public void dfs(int row, int col, int[][] visited, int[][] board, int m, int n) {
+        visited[row][col] = 1;
+        int[][] directions = {{-1, 0}, {1,0}, {0,-1},{0,1}};
+        for(int[] dir: directions) {
+            int newRow = row + dir[0];
+            int newCol = col + dir[1];
+
+            if(newRow >= 0 && newRow < m && newCol >= 0 && newCol < n && visited[newRow][newCol] == 0 && board[newRow][newCol] == 1) {
+                
+                dfs(newRow, newCol, visited, board, m, n);
+            } 
+        }
+
+    }
+}

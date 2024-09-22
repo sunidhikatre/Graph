@@ -1,0 +1,59 @@
+
+Initialization: Initialize a HashSet set to store unique island shapes represented as strings. Iterate through each cell of the grid, and if it's a land cell (grid[i][j] == 1) and hasn't been visited (visited[i][j] == 0), initiate DFS.
+
+DFS Exploration: Define a recursive dfs function that marks the current cell as visited, appends the relative position from the initial cell (row0, col0) to a StringBuilder sb, and recursively explores all connected land cells in four possible directions.
+
+Unique Island Detection: Convert the StringBuilder sb to a string after DFS completes for an island, representing its unique shape relative to the initial cell. Add this string to the set to ensure each island shape is counted only once.
+
+
+class Pair {
+    int first;
+    int second;
+    Pair(int first, int second) {
+        this.first = first;
+        this.second = second;
+    }
+}
+class Solution {
+    
+    HashSet<String> set = new HashSet<>();
+    int countDistinctIslands(int[][] grid) {
+        // Your Code here
+        int row = grid.length;
+        int col = grid[0].length; 
+        int [][]visited = new int[row][col];
+        
+        for(int i=0; i< row; i++) {
+            for(int j=0; j<col; j++) {
+                if(grid[i][j] == 1 && visited[i][j] == 0) {
+                    StringBuilder sb = new StringBuilder();
+                    dfs(i, j, visited, grid, i, j, sb);
+                    // island completed
+                    set.add(sb.toString());
+                }
+            }
+        }
+        return set.size();
+    }
+
+    public void dfs(int row, int col, int [][] visited, int[][] grid, int row0, int col0, StringBuilder sb) {
+        visited[row][col] = 1;
+        sb.append(row - row0);
+        sb.append(col - col0);
+    
+        int m = grid.length;
+        int n = grid[0].length;
+        
+        int[][] directions = {{-1,0}, {0,-1}, {0,1}, {1,0}};
+        for(int[] dir: directions) {
+            int newRow = row + dir[0];
+            int newCol = col + dir[1];
+            
+            if(newRow >= 0 && newRow < m && newCol >=0 && newCol <n && grid[newRow][newCol] == 1 
+            && visited[newRow][newCol] == 0) {
+                dfs(newRow, newCol, visited, grid, row0, col0, sb);
+            }
+        }
+        
+    }
+}

@@ -1,0 +1,43 @@
+
+Initialization: Initialize an array color where color[i] represents the color assigned to node i. Start with all nodes uncolored (color[i] = -1).
+
+DFS for Bipartiteness: Iterate through each node. For each uncolored node (color[i] == -1), perform a Depth-First Search (DFS) starting from that node. Assign alternating colors (0 and 1) to adjacent nodes. If a conflict arises (an adjacent node is assigned the same color as the current node), return false indicating the graph is not bipartite.
+
+Result: If the DFS completes for all nodes without conflicts, return true, indicating the graph is bipartite.
+
+
+class Solution
+{
+    public boolean isBipartite(int V, ArrayList<ArrayList<Integer>>adj)
+    {
+        // Code here
+        int[] color = new int[V];
+        
+        for(int i = 0; i < V; i++) {
+            color[i] = -1;
+        }
+        
+        for(int i=0; i<V; i++) {
+            if(color[i] == -1) {
+                if(dfs(i, color, adj, 0) == false){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    private boolean dfs(int node, int[] color,  ArrayList<ArrayList<Integer>>adj, int currentColor) {
+        color[node] = currentColor;
+        for(int adjNode : adj.get(node)) {
+            if(color[adjNode] == -1) {
+               if(dfs(adjNode, color, adj, 1-currentColor) == false){
+                   return false;
+               }
+            } else if(color[adjNode] != -1 && color[adjNode] == color[node]) {
+                return false;
+            }
+        }
+        return true;
+    }
+}

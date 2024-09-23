@@ -1,0 +1,45 @@
+
+Calculate indegree for each node by iterating over all edges in the graph.
+Initialize a queue with all nodes that have indegree 0 and process each node, adding it to the result.
+Reduce the indegree of adjacent nodes, adding any node with indegree 0 to the queue until all nodes are processed.
+
+class Solution
+{
+    //Function to return list containing vertices in Topological order. 
+    static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) 
+    {
+        // add your code here
+        
+        int[] indegree = new int[V];
+        int[] topo = new int[V];
+        int current = 0;
+        
+        for(int i=0; i<V; i++){
+            for(int adjNode : adj.get(i)) {
+                indegree[adjNode]++;
+            }
+        }
+        
+        Queue<Integer> q = new LinkedList<>();
+        for(int i=0; i<V; i++) {
+            if(indegree[i] == 0) {
+                q.add(i);
+            }
+        }
+        
+        while(!q.isEmpty()) {
+            int node = q.poll();
+            topo[current++] = node;
+            
+            for(int adjNode : adj.get(node)) {
+                indegree[adjNode]--;
+                if(indegree[adjNode] == 0) {
+                    q.add(adjNode);
+                }
+            }
+        }
+        
+        return topo;
+        
+    }
+}

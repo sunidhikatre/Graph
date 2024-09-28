@@ -1,0 +1,36 @@
+Why we use Priority Queue
+      0
+   1     2 
+      3
+   4     5
+     
+dist(0,1)=3
+dist(1,3)=4
+dist(0,2)=1
+dist(2,3)=2
+
+we are unnecessarily processin 0 to 3 left path with children hence use PQ for that so that we dont do extra iteration
+
+Algorithm:
+
+while(!pq.isEmpty()) {         --------------->V
+  dis, node= pop()  ------> log(heapSize)
+  for(iterate on adj nodes) {   -------> no.of edges = V-1(assume 4 nodes connected to other 3) 
+    if(conditional check) {
+      update dist
+      push in PQ  ------------>  log(heapSize)
+    }
+  }
+}
+
+
+
+TC:
+O(V(pop vertex from min heap + (no.of edges on each vertex * (push in PQ))))
+O(V*(log(heapSize))+ ne*(log(heapSize)))
+O(V*(log(heapSize))*(ne+1))
+O(V*(log(heapSize))*(V-1+1))
+O(V2 log(heapSize))
+O(V2 * log(V2))
+O(V2*2log(v))
+O(E*2logV) ~ O(E logV)

@@ -1,0 +1,40 @@
+Use Priority Queue to get the shortest path in undirected graph with varying weights 
+
+class Solution
+{
+    //Function to find the shortest distance of all the vertices
+    //from the source vertex S.
+    static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S)
+    {
+        // Write your code here
+        int[] dist = new int[V];
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> a.dist - b.dist);
+        
+        for(int i=0; i<V; i++)
+        {
+            dist[i] = Integer.MAX_VALUE;
+        }
+        
+        dist[S] = 0;
+        pq.add(new Pair(S,0));
+        
+        while(!pq.isEmpty()) {
+            int node = pq.peek().node;
+            int distance = pq.peek().dist;
+            pq.remove();
+            
+            for(int i = 0; i < adj.get(node).size(); i++){
+                int adjNode = adj.get(node).get(i).get(0);
+                int adjDist = adj.get(node).get(i).get(1);
+                
+                if(distance + adjDist < dist[adjNode]) {
+                    dist[adjNode] = distance + adjDist;
+                    pq.add(new Pair(adjNode, dist[adjNode]));
+                }
+            }
+            
+        }
+        return dist;
+    }
+}
+

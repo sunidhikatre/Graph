@@ -1,0 +1,85 @@
+Graph Representation: Construct an adjacency list to represent the graph from the provided edges, storing weights for each connection between nodes.
+
+Dijkstra's Algorithm: Use a priority queue to iteratively explore the closest unvisited node, updating distances and parent pointers for each adjacent node until all reachable nodes are processed.
+
+Path Reconstruction: Trace back from the target node to the source using the parent pointers to construct the shortest path, returning [-1] if no path exists.
+
+
+class Pair {
+    int node;
+    int dist;
+
+    Pair(int node, int distance) {
+        this.node = node;
+        this.dist = distance;
+    }
+}
+class Solution {
+    public List<Integer> shortestPath(int n, int m, int edges[][]) {
+        // Initialize parent and distance arrays
+        int[] parent = new int[n + 1];
+        int[] dist = new int[n + 1];
+
+        ArrayList<ArrayList<Pair>> adj = new ArrayList<>();
+        
+        // Create adjacency list
+        for (int i = 0; i <= n; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < m; i++) {
+            int u = edges[i][0];
+            int v = edges[i][1];
+            int wt = edges[i][2];
+            adj.get(u).add(new Pair(v, wt));
+            adj.get(v).add(new Pair(u, wt));
+        }
+
+        // Min-heap priority queue for Dijkstra's algorithm
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> a.dist - b.dist);
+
+        // Initialize distances
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        Arrays.fill(parent, -1);
+
+        dist[1] = 0;
+        parent[1] = -1;  // Node 1 has no parent
+        pq.add(new Pair(1, 0));
+
+        while (!pq.isEmpty()) {
+            Pair current = pq.poll();
+            int node = current.node;
+            int distance = current.dist;
+
+            // Iterate through adjacent nodes
+            for (Pair adjPairs : adj.get(node)) {
+                int adjNode = adjPairs.node;
+                int adjDist = adjPairs.dist;
+
+                // Relaxation step
+                if (distance + adjDist < dist[adjNode]) {
+                    dist[adjNode] = distance + adjDist;
+                    parent[adjNode] = node;  // Set the parent for the path
+                    pq.add(new Pair(adjNode, dist[adjNode]));
+                }
+            }
+        }
+
+        ArrayList<Integer> res = new ArrayList<>();
+        
+        // If no path exists to node n
+        if (dist[n] == Integer.MAX_VALUE) {
+            res.add(-1);
+            return res;
+        }
+
+        // Reconstruct the path from n to 1
+        for (int at = n; at != -1; at = parent[at]) {
+            res.add(at);
+        }
+
+        // Reverse the path so it starts from 1 and ends at n
+        Collections.reverse(res);
+        return res;
+    }
+}

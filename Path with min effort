@@ -1,0 +1,64 @@
+Use Dijkstra's algorithm to minimize the maximum effort (absolute height difference) between consecutive cells.
+Maintain a diff matrix to track the minimum effort required to reach each cell and a priority queue to process cells in increasing order of effort.
+For each cell, calculate the maximum effort required to move to neighboring cells, and update the diff matrix if a lower maximum effort is found.
+Stop as soon as the bottom-right cell is reached, returning the minimum effort required.
+
+
+class Pair {
+    int difference;
+    int row;
+    int col;
+    Pair(int difference, int row, int col) {
+        this.difference = difference;
+        this.row = row;
+        this.col = col;
+    }
+}
+class Solution {
+    public int minimumEffortPath(int[][] heights) {
+        int m = heights.length;
+        int n = heights[0].length;
+        int[][] diff = new int [m][n];
+
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j<n; j++) {
+                diff[i][j] = Integer.MAX_VALUE;
+            }
+        }
+
+      PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> a.difference - b.difference);
+
+        pq.add(new Pair(0, 0, 0));
+
+        int[][] directions = {{-1,0}, {0, -1}, {1,0}, {0,1}};
+
+        while(!pq.isEmpty()) {
+            Pair currentPair = pq.peek();
+            int currentRow = currentPair.row;
+            int currentCol = currentPair.col;
+            int currentDiff = currentPair.difference;
+            pq.remove();
+
+            if (currentRow == m - 1 && currentCol == n - 1) {
+                 return currentDiff;
+            }
+
+            for(int[] dir : directions) {
+                int newRow = currentRow + dir[0];
+                int newCol = currentCol + dir[1];
+                if(newRow >= 0 && newRow < m && newCol >=0 && newCol <n) {
+                    //same route me kitna maxeffort lga
+                    int maxEffort = Math.max(Math.abs(heights[currentRow][currentCol] - heights[newRow][newCol]), currentDiff);
+
+                    //wahantk pahunchne keliye sbhi maxefforts me min konsa hai
+                    if(maxEffort < diff[newRow][newCol]) {
+                        diff[newRow][newCol] = maxEffort;
+                        pq.add(new Pair(maxEffort, newRow, newCol));
+                   }                 
+                }
+
+            }
+        }
+        return diff[m-1][n-1];
+    }
+}

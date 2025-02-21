@@ -1,7 +1,10 @@
 
-Initialization: Initialize an array color where color[i] represents the color assigned to node i. Start with all nodes uncolored (color[i] = -1).
+Initialization: Initialize an array color where color[i] represents the color assigned to node i. 
+Start with all nodes uncolored (color[i] = -1).
 
-DFS for Bipartiteness: Iterate through each node. For each uncolored node (color[i] == -1), perform a Depth-First Search (DFS) starting from that node. Assign alternating colors (0 and 1) to adjacent nodes. If a conflict arises (an adjacent node is assigned the same color as the current node), return false indicating the graph is not bipartite.
+DFS for Bipartiteness: Iterate through each node. For each uncolored node (color[i] == -1),
+perform a Depth-First Search (DFS) starting from that node. Assign alternating colors (0 and 1) to
+adjacent nodes. If a conflict arises (an adjacent node is assigned the same color as the current node), return false indicating the graph is not bipartite.
 
 Result: If the DFS completes for all nodes without conflicts, return true, indicating the graph is bipartite.
 

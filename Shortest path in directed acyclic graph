@@ -1,0 +1,12 @@
+Following is complete algorithm for finding shortest distances. 
+
+
+
+Initialize dist[] = {INF, INF, ….} and dist[s] = 0 where s is the source vertex. 
+
+Create a topological order of all vertices. 
+
+Do following for every vertex u in topological order. 
+………..Do following for every adjacent vertex v of u 
+………………if (dist[v] > dist[u] + weight(u, v)) 
+………………………dist[v] = dist[u] + weight(u, v) 

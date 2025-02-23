@@ -1,0 +1,9 @@
+🔹 When to Use Which?
+✅ Use Dijkstra When:
+You need the shortest path between nodes.
+The graph may have cycles but no negative weights.
+You need to find the fastest way in networks (road maps, internet routing, etc.).
+✅ Use Topological Sorting When:
+You need a valid ordering of tasks or dependencies.
+The graph is a DAG (no cycles allowed).
+Examples: Task scheduling, compilation order, course prerequisites.

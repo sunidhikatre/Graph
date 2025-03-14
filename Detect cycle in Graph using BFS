@@ -1,0 +1,53 @@
+
+// check if parent and adjNode are not same if its same then its ok u came from same path
+//if not then return true cycle is detected
+
+class Pair {
+    int node;
+    int parent;
+    Pair(int node, int parent) {
+        this.node = node;
+        this.parent = parent;
+    }
+}
+class Solution {
+    // Function to detect cycle in an undirected graph.
+    public boolean isCycle(ArrayList<ArrayList<Integer>> adj) {
+        int n = adj.size();
+        int[] visited = new int[n];
+        boolean res = false;
+        for(int i=0; i<n; i++) {
+            visited[i] = 0;
+        }
+        
+        for(int i=0; i<n; i++) {
+            if(visited[i] == 0) {
+                 res = bfsCycle(i, adj, visited);
+            }
+        }
+        return res;
+    }
+    
+    private boolean bfsCycle(int startNode, ArrayList<ArrayList<Integer>> adj,
+    int[] visited) {
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(0, -1));
+        visited[startNode] = 1;
+        
+        while(!q.isEmpty()) {
+            Pair currentPair = q.poll();
+            int currentNode = currentPair.node;
+            int currentParent = currentPair.parent;
+            
+            for(int adjNode : adj.get(currentNode)) {
+                if(visited[adjNode] != 1) {
+                    q.add(new Pair(adjNode, currentNode));
+                    visited[adjNode] = 1;
+                } else if(currentParent != adjNode) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+} 

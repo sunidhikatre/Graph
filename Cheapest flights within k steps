@@ -1,5 +1,6 @@
 Build the graph using an adjacency list from the flights data.
-Use BFS with a queue to explore nodes, tracking the current node, cost, and stops, while updating the minimum cost to each node.
+Use BFS with a queue to explore nodes, tracking the current node, cost, and stops, 
+while updating the minimum cost to each node.
 Limit the stops to k, and return the minimum cost to the destination, or -1 if no valid path is found.
 
 

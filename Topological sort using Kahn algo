@@ -1,3 +1,6 @@
+Topological Sort is used for ordering tasks or nodes in a Directed Acyclic Graph (DAG) such that:
+
+For every directed edge u → v, u comes before v in the ordering.
 
 Calculate indegree for each node by iterating over all edges in the graph.
 Initialize a queue with all nodes that have indegree 0 and process each node, adding it to the result.

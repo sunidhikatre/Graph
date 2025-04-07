@@ -1,3 +1,14 @@
+A Minimum Spanning Tree (MST) is a special kind of tree used in weighted undirected graphs. Here’s the core idea:
+
+🔹 Definition:
+A Minimum Spanning Tree (MST) is:
+
+A subset of the edges that connects all vertices of a graph
+
+With the minimum possible total edge weight
+
+Without any cycles
+
 class Pair {
     int node;
     int weight;

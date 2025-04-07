@@ -1,3 +1,5 @@
+Detect shortest path in directed graph helps in neg cycle
+
 class Solution {
     static int[] bellmanFord(int V, int[][] edges, int src) {
         // Write your code here

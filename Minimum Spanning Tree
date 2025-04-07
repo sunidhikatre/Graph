@@ -32,7 +32,7 @@ class Solution {
             if(visited[currentNode] == 1) {
                 continue;
             }
-            
+            //jb pq se nikalenege tbhi visited mark krna hai not if adjNode visit hota h toh
             visited[currentNode] = 1;
             sum += currentWeight;
             for(int[] adjNode : adj.get(currentNode)) {
